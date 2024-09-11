@@ -18,9 +18,9 @@
 		"enabled": true,
 		"formatWithErrors": false,
 		"ignore": [],
-		"indentStyle": "tab",
+		"indentStyle": "space",
 		"lineEnding": "lf",
-		"lineWidth": 100
+		"lineWidth": 80
 	},
 	"javascript": {
 		"parser": {
