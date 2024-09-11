@@ -1,47 +1,51 @@
 export interface IndexRequest {}
 
 export interface IndexResponse<Entity> {
-    items: Partial<Entity>[];
-    total: number;
+  items: Partial<Entity>[];
+  total: number;
 }
 
 export interface ShowRequest {
-    id: string;
+  id: string;
 }
 
 export interface ShowResponse<Entity> {
-    item: Partial<Entity>;
+  item: Partial<Entity>;
 }
 
 export interface CreateRequest<Entity> {
-    data: Partial<Entity>;
+  data: Partial<Entity>;
 }
 
 export interface CreateResponse {
-    id: string;
+  id: string;
 }
 
 export interface UpdateRequest<Entity> {
-    id: string;
-    data: Partial<Entity>;
+  id: string;
+  data: Partial<Entity>;
 }
 
 export interface UpdateResponse {
-    success: boolean;
+  success: boolean;
 }
 
 export interface DeleteRequest {
-    id: string;
+  id: string;
 }
 
 export interface DeleteResponse {
-    success: boolean;
+  success: boolean;
 }
 
 export abstract class BaseRepository<Entity> {
   public abstract index(params: IndexRequest): Promise<IndexResponse<Entity>>;
   public abstract show(params: ShowRequest): Promise<ShowResponse<Entity>>;
-  public abstract create(params: CreateRequest<Partial<Entity>>): Promise<CreateResponse>;
-  public abstract update(params: UpdateRequest<Partial<Entity>>): Promise<UpdateResponse>;
+  public abstract create(
+    params: CreateRequest<Partial<Entity>>,
+  ): Promise<CreateResponse>;
+  public abstract update(
+    params: UpdateRequest<Partial<Entity>>,
+  ): Promise<UpdateResponse>;
   public abstract delete(params: DeleteRequest): Promise<DeleteResponse>;
 }
