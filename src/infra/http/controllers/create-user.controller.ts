@@ -5,25 +5,23 @@ import { ZodValidationPipe } from 'src/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 
 const createPostBodySchema = z.object({
-	field1: z.string(),
-	field2: z.string(),
-	field3: z.string(),
+  field1: z.string(),
+  field2: z.string(),
+  field3: z.string(),
 });
 
 type CreatePostBodySchema = z.infer<typeof createPostBodySchema>;
 
 @Controller()
 export class CreateUserController {
-	constructor(
-		private readonly prismaService: PrismaService,
-	) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-	@Post('/post')
-	@HttpCode(201)
-	@UsePipes(new ZodValidationPipe(createPostBodySchema))
-	create(@Body() body: CreatePostBodySchema) {
-		const { field1, field2, field3 } = body;
+  @Post('/post')
+  @HttpCode(201)
+  @UsePipes(new ZodValidationPipe(createPostBodySchema))
+  create(@Body() body: CreatePostBodySchema) {
+    const { field1, field2, field3 } = body;
 
-		return { field1, field2, field3 };
-	}
+    return { field1, field2, field3 };
+  }
 }
