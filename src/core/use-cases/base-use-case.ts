@@ -1,9 +1,13 @@
-interface UseCaseRequest {}
-interface UseCaseResponse {}
+export interface UseCaseInput {
+  [key: string]: never;
+}
+export interface UseCaseOutput {
+  [key: string]: never;
+}
 
 export abstract class BaseUseCase<
-  Request extends UseCaseRequest,
-  Response extends UseCaseResponse,
+  Input extends UseCaseInput,
+  Output extends UseCaseOutput,
 > {
-  public abstract execute(params: Request): Promise<Response>;
+  public abstract execute(params: Input): Promise<Output>;
 }
