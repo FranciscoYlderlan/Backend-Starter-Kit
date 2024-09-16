@@ -1,13 +1,3 @@
-export interface UseCaseInput {
-  [key: string]: never;
-}
-export interface UseCaseOutput {
-  [key: string]: never;
-}
-
-export abstract class BaseUseCase<
-  Input extends UseCaseInput,
-  Output extends UseCaseOutput,
-> {
+export abstract class BaseUseCase<Input, Output> {
   public abstract execute(params: Input): Promise<Output>;
 }
