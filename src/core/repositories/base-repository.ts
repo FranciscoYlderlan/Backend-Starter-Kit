@@ -42,13 +42,15 @@ export interface DeleteResponse {
 
 export abstract class BaseRepository<Entity> {
   public abstract index(params: IndexRequest): Promise<IndexResponse<Entity>>;
-
   public abstract show(params: ShowRequest): Promise<ShowResponse<Entity>>;
+
   public abstract create(
     params: CreateRequest<Partial<Entity>>,
   ): Promise<CreateResponse>;
+
   public abstract update(
     params: UpdateRequest<Partial<Entity>>,
   ): Promise<UpdateResponse>;
+
   public abstract delete(params: DeleteRequest): Promise<DeleteResponse>;
 }
