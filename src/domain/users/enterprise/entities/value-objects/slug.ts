@@ -12,19 +12,18 @@ export class Slug extends BaseValueObject<SlugProps> {
     super(slug);
   }
 
-  public static transform<SlugProps extends ValueObjectProps>(
-    props: SlugProps,
-  ): Slug {
+  public static transform(props: SlugProps): Slug {
     const slug = Slug.createSlug(props.value);
     return new Slug({ value: slug });
   }
 
   private static createSlug(text: string): string {
     return text
+      .normalize('NFKD')
       .toLocaleLowerCase()
       .trim()
-      .replace(/\s+/g, '-') // Substitui espaços por hífens
-      .replace(/[^\w\s-]/g, '') // Remove caracteres especiais
-      .replace(/-+/g, '-'); // Remove hífens consecutivos
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/-+/g, '-'); // Remove consecutive hyphens
   }
 }
