@@ -9,8 +9,7 @@ import {
   ShowResponse,
   UpdateRequest,
   UpdateResponse,
-} from 'src/core/repositories/base-repository';
-import { expect, test } from 'vitest';
+} from '@/core/repositories/base-repository';
 import { User } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
 import { CreateUserUseCase } from './create-user';
