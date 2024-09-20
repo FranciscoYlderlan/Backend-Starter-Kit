@@ -1,4 +1,4 @@
-import { UniqueID } from 'src/domain/users/enterprise/entities/value-objects/unique-id';
+import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
 
 export abstract class BaseEntity<Property> {
   private id: UniqueID;
