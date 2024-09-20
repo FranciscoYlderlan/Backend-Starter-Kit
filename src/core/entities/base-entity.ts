@@ -4,9 +4,9 @@ export abstract class BaseEntity<Property> {
   private id: UniqueID;
   protected props: Property;
 
-  constructor(props: Property, id?: string) {
+  protected constructor(props: Property, id?: UniqueID) {
     this.props = props;
-    this.id = UniqueID.transform({ value: id });
+    this.id = id ?? UniqueID.transform({});
   }
 
   public getId(): UniqueID {
