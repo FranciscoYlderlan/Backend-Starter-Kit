@@ -1,3 +1,5 @@
+import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
+
 export interface IndexRequest {
   [k: string]: never;
 } // ou Record<string, never> para represetar objeto vazío {}
@@ -20,7 +22,7 @@ export interface CreateRequest<Entity> {
 }
 
 export interface CreateResponse {
-  id: string;
+  id: UniqueID;
 }
 
 export interface UpdateRequest<Entity> {
