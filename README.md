@@ -29,7 +29,14 @@
 
 ## Overview
 
-User management through authentication and registration features with JWT and Bcrypt for secure login and account creation.2. Integration of database (Prisma) and environment variable (Env) handling, ensuring seamless persistence.3. Organized modular structure facilitating code readability and maintenance.4. Usage of Zod for robust schema validation to improve data consistency across layers.5. A RESTful API with NestJS controller setup for handling user registration and authentication requests, enhancing client-server communication.This comprehensive Backend-Starter-Kit aims to help developers kickstart their projects swiftly without having to worry about setting up basic backend architecture, focusing instead on project development and expansion.
+The application being developed focuses on implementing core principles such as **Dependency Inversion**, **Dependency Injection**, and **Domain-Driven Design (DDD)**, along with **Clean Architecture**. Its primary goal is to deliver essential, pre-configured features to boost productivity and streamline the creation of CRUD applications.
+
+Built on **NestJS** for the backend, the application includes foundational features like:
+
+- **Database configuration**: Pre-built settings to quickly connect and set up databases.
+- **Folder structure**: Organized layers separating the **core** and the **domain** from the **infrastructure** for a clear architectural approach.
+- **Pre-established contracts**: Interfaces and contracts are defined, with pre-built methods that adhere to Clean Architecture standards.
+- **Domain-Driven Design**: Separation of concerns between the domain logic and the infrastructure, ensuring that domain models remain isolated and reusable.
 
 ---
 
