@@ -23,6 +23,14 @@ export class InMemoryUserRepository implements UserRepository {
     const foundUser = this.Users.find(
       (user) => user[key as keyof UserProps] === value,
     );
+
+    return { item: foundUser };
+  }
+
+  public async findBySlug(slug: string): Promise<ShowResponse<User>> {
+    const foundUser = await this.Users.find(
+      (user) => user.getSlug().toString() === slug,
+    );
     return { item: foundUser };
   }
 
