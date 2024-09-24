@@ -18,6 +18,10 @@ export class UniqueID extends BaseValueObject<UniqueIDProps> {
     return new UniqueID({ value: uniqueID });
   }
 
+  public toString(): string {
+    return this.value.value;
+  }
+
   private static generateUniqueID(id?: string): string {
     return id ?? randomUUID();
   }
