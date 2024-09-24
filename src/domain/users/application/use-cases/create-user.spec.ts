@@ -19,7 +19,7 @@ describe('Create User', () => {
     expect(newUser.getId()).not.toBeUndefined();
     expect(newUser.getId()).not.toBeNull();
     expect(newUser.getName()).toEqual('User Test');
-    expect(newUser.getSlug()).toEqual('user-test');
+    expect(newUser.getSlug().toString()).toEqual('user-test');
     expect(newUser.getEmail()).toEqual('user@email.test');
     expect(newUser.getAvatar()).toEqual('user.png');
     expect(newUser.getPassword()).toEqual('test123');
