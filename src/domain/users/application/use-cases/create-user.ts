@@ -21,7 +21,15 @@ export class CreateUserUseCase extends BaseUseCase<
     const userProps = params;
 
     const user = User.create(userProps);
-    await this.userRepository.create({ data: user });
+
+    const newUserProps: CreateUserInput = {
+      ...userProps,
+      id: user.getId(),
+      slug: user.getSlug(),
+      createdAt: user.getCreatedAt(),
+    };
+
+    await this.userRepository.create({ data: newUserProps });
     return { user };
   }
 }
