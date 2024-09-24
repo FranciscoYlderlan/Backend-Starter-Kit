@@ -58,6 +58,12 @@ export class InMemoryUserRepository implements UserRepository {
     return { success: true };
   }
   public async delete(params: DeleteRequest): Promise<DeleteResponse> {
+    params.id;
+    const userIndex = this.Users.findIndex(
+      (user) => user.getId().toString() === params.id,
+    );
+
+    this.Users.splice(userIndex, 1);
     return { success: true };
   }
 }
