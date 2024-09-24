@@ -10,6 +10,10 @@ import { User, UserProps } from '@/domain/users/enterprise/entities/user';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 
 export abstract class UserRepository extends BaseRepository<User, UserProps> {
+  public async findBySlug(params: string): Promise<ShowResponse<User>> {
+    return { item: {} };
+  }
+
   public async findByProperty<K extends keyof UserProps>(
     params: Record<K, UserProps[K]>,
   ): Promise<ShowResponse<User>> {
