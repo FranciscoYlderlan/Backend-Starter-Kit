@@ -17,6 +17,10 @@ export class Slug extends BaseValueObject<SlugProps> {
     return new Slug({ value: slug });
   }
 
+  public toString(): string {
+    return this.value.value;
+  }
+
   private static createSlug(text: string): string {
     return text
       .normalize('NFKD')

@@ -4,7 +4,7 @@ import { User, UserProps } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
 
 export interface CreateUserInput
-  extends Optional<UserProps, 'createdAt' | 'slug'> {}
+  extends Optional<UserProps, 'createdAt' | 'slug' | 'id'> {}
 
 export interface CreateUserOutput {
   user: User;
