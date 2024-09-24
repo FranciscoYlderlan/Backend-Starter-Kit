@@ -14,15 +14,12 @@ export interface UserProps {
 }
 
 export class User extends BaseEntity<UserProps> {
-  static create(
-    props: Optional<UserProps, 'createdAt' | 'slug' | 'id'>,
-    id?: UniqueID,
-  ) {
+  static create(props: Optional<UserProps, 'createdAt' | 'slug' | 'id'>) {
     const user = new User({
       ...props,
       createdAt: new Date(),
       slug: Slug.transform({ value: props.name }),
-      id,
+      id: props.id,
     });
 
     return user;
