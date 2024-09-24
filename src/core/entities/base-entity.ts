@@ -4,11 +4,13 @@ interface PropertyBase {
 }
 export abstract class BaseEntity<Property extends PropertyBase> {
   private id: UniqueID;
-  protected props: Property;
+  protected props: Omit<Property, 'id'>;
 
   protected constructor(props: Property) {
-    this.props = props;
-    this.id = props.id ?? UniqueID.transform({});
+    const { id, ...restProps } = props;
+
+    this.id = id ?? UniqueID.transform({});
+    this.props = restProps;
   }
 
   public getId(): UniqueID {
