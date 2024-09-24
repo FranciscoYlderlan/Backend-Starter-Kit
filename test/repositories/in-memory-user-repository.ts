@@ -12,10 +12,9 @@ import {
 } from '@/core/repositories/base-repository';
 import { UserRepository } from '@/domain/users/application/repositories/user-repository';
 import { User, UserProps } from '@/domain/users/enterprise/entities/user';
-import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
 
 export class InMemoryUserRepository implements UserRepository {
-  public Users: User[];
+  public Users: User[] = [];
 
   public async findByProperty(
     params: Partial<UserProps>,
@@ -36,33 +35,22 @@ export class InMemoryUserRepository implements UserRepository {
   public async create(
     params: CreateRequest<Partial<UserProps>>,
   ): Promise<CreateResponse> {
-    // const {
-    //   getId,
-    //   getName,
-    //   getSlug,
-    //   getEmail,
-    //   getPassword,
-    //   getAvatar,
-    //   getCreatedAt,
-    //   getUpdatedAt,
-    // } = params.data;
-    // const newUser = User.create(
-    //   {
-    //     name: getName(),
-    //     email: getEmail(),
-    //     password: getPassword(),
-    //     avatar: getAvatar(),
-    //     slug: Slug.transform({ value: getSlug() }),
-    //     createdAt: getCreatedAt(),
-    //     updatedAt: getUpdatedAt(),
-    //   },
-    //   getId(),
-    // );
+    const { id, name, avatar, createdAt, email, password, slug, updatedAt } =
+      params.data;
+    const props = {
+      id,
+      name,
+      email,
+      password,
+      avatar,
+      slug,
+      createdAt,
+    };
+    const auxUser: User = User.create(props);
 
-    // this.Users.push(newUser);
+    this.Users.push(auxUser);
 
-    // return { id: this.Users[0].getId() };
-    return { id: {} as UniqueID };
+    return { id: this.Users[0].getId() };
   }
   public async update(
     params: UpdateRequest<Partial<UserProps>>,
