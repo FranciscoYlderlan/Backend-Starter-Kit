@@ -17,17 +17,17 @@ export interface ShowResponse<Entity> {
   item: Partial<Entity>;
 }
 
-export interface CreateRequest<Entity> {
-  data: Partial<Entity>;
+export interface CreateRequest<EntityProps> {
+  data: Partial<EntityProps>;
 }
 
 export interface CreateResponse {
   id: UniqueID;
 }
 
-export interface UpdateRequest<Entity> {
+export interface UpdateRequest<EntityProps> {
   id: string;
-  data: Partial<Entity>;
+  data: Partial<EntityProps>;
 }
 
 export interface UpdateResponse {
@@ -42,16 +42,16 @@ export interface DeleteResponse {
   success: boolean;
 }
 
-export abstract class BaseRepository<Entity> {
+export abstract class BaseRepository<Entity, EntityProps> {
   public abstract index(params: IndexRequest): Promise<IndexResponse<Entity>>;
   public abstract show(params: ShowRequest): Promise<ShowResponse<Entity>>;
 
   public abstract create(
-    params: CreateRequest<Partial<Entity>>,
+    params: CreateRequest<Partial<EntityProps>>,
   ): Promise<CreateResponse>;
 
   public abstract update(
-    params: UpdateRequest<Partial<Entity>>,
+    params: UpdateRequest<Partial<EntityProps>>,
   ): Promise<UpdateResponse>;
 
   public abstract delete(params: DeleteRequest): Promise<DeleteResponse>;
