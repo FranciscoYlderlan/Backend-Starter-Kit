@@ -27,7 +27,7 @@ export class EditUserUseCase extends BaseUseCase<
     const user = await this.userRepository.findByProperty({ id });
 
     if (!user.item) throw new Error('User not found.');
-    console.log('entrei');
+
     const status = await this.userRepository.update({
       id,
       data: { name, email, avatar, password },
