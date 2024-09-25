@@ -4,6 +4,8 @@ import {
   CreateResponse,
   DeleteRequest,
   DeleteResponse,
+  IndexRequest,
+  IndexResponse,
   ShowResponse,
   UpdateRequest,
   UpdateResponse,
@@ -12,6 +14,10 @@ import { User, UserProps } from '@/domain/users/enterprise/entities/user';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 
 export abstract class UserRepository extends BaseRepository<User, UserProps> {
+  public async index(params: IndexRequest): Promise<IndexResponse<User>> {
+    return { items: [], totalCount: -1 };
+  }
+
   public async findBySlug(params: string): Promise<ShowResponse<User>> {
     return { item: {} };
   }
@@ -21,6 +27,7 @@ export abstract class UserRepository extends BaseRepository<User, UserProps> {
   ): Promise<ShowResponse<User>> {
     return { item: {} };
   }
+
   public async create(
     params: CreateRequest<Partial<UserProps>>,
   ): Promise<CreateResponse> {

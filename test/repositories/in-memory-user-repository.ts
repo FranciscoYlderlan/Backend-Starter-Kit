@@ -16,6 +16,28 @@ import { User, UserProps } from '@/domain/users/enterprise/entities/user';
 export class InMemoryUserRepository implements UserRepository {
   public Users: User[] = [];
 
+  public async index({
+    page,
+    itemsPerPage,
+    sortDirection,
+  }: IndexRequest): Promise<IndexResponse<User>> {
+    const users = this.Users.sort((a, b) => {
+      const dateA = a.getCreatedAt().getTime();
+      const dateB = b.getCreatedAt().getTime();
+      if (sortDirection === 'asc') {
+        return dateA - dateB;
+      }
+      return dateB - dateA;
+    });
+
+    const totalCount = users.length;
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage; // ou  page * itemsPerPage;
+
+    const paginatedUsers = users.slice(startIndex, endIndex);
+
+    return { items: paginatedUsers, totalCount };
+  }
   public async findByProperty(
     params: Partial<UserProps>,
   ): Promise<ShowResponse<User>> {
@@ -34,9 +56,6 @@ export class InMemoryUserRepository implements UserRepository {
     return { item: foundUser };
   }
 
-  public async index(params: IndexRequest): Promise<IndexResponse<User>> {
-    return { items: [], total: -1 };
-  }
   public async show(params: ShowRequest): Promise<ShowResponse<User>> {
     return { item: {} };
   }
