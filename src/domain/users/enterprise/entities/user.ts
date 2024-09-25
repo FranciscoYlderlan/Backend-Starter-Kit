@@ -17,7 +17,7 @@ export class User extends BaseEntity<UserProps> {
   static create(props: Optional<UserProps, 'createdAt' | 'slug' | 'id'>) {
     const user = new User({
       ...props,
-      createdAt: new Date(),
+      createdAt: props.createdAt ?? new Date(),
       slug: Slug.transform({ value: props.name }),
       id: props.id,
     });
