@@ -25,6 +25,30 @@ export class User extends BaseEntity<UserProps> {
     return user;
   }
 
+  public update(
+    props: Partial<Omit<UserProps, 'id' | 'slug' | 'createdAt' | 'updatedAt'>>,
+  ): void {
+    Object.assign(this.props, {
+      ...props,
+      name: props.name ?? this.props.name,
+      slug: props.name
+        ? Slug.transform({ value: props.name })
+        : this.props.slug,
+    });
+    // if (props.name) {
+    //   this.props.name = props.name;
+    //   this.props.slug = Slug.transform({ value: props.name });
+    // }
+
+    // if (props.email) this.props.email = props.email;
+
+    // if (props.avatar) this.props.avatar = props.avatar;
+
+    // if (props.password) this.props.password = props.password;
+
+    this.touch();
+  }
+
   public getName(): string {
     return this.props.name;
   }
