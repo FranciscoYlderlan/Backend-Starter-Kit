@@ -26,7 +26,7 @@ export interface CreateResponse {
 }
 
 export interface UpdateRequest<EntityProps> {
-  id: string;
+  id: UniqueID;
   data: Partial<EntityProps>;
 }
 
