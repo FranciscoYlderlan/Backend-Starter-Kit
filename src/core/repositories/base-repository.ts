@@ -1,12 +1,11 @@
 import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
+import { PaginationParams } from './pagination-params';
 
-export interface IndexRequest {
-  [k: string]: never;
-} // ou Record<string, never> para represetar objeto vazío {}
+export interface IndexRequest extends PaginationParams {}
 
 export interface IndexResponse<Entity> {
   items: Partial<Entity>[];
-  total: number;
+  totalCount: number;
 }
 
 export interface ShowRequest {
