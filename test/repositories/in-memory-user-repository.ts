@@ -63,6 +63,19 @@ export class InMemoryUserRepository implements UserRepository {
   public async update(
     params: UpdateRequest<Partial<UserProps>>,
   ): Promise<UpdateResponse> {
+    const {
+      id,
+      data: { name, email, password, avatar },
+    } = params;
+
+    const itemIndex = this.Users.findIndex(
+      (item) => item.getId().toString() === id.toString(),
+    );
+
+    const auxUser: User = this.Users[itemIndex];
+
+    auxUser.update({ name, email, avatar, password });
+
     return { success: true };
   }
   public async delete(params: DeleteRequest): Promise<DeleteResponse> {

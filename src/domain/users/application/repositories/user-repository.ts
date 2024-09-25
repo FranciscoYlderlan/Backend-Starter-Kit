@@ -5,6 +5,8 @@ import {
   DeleteRequest,
   DeleteResponse,
   ShowResponse,
+  UpdateRequest,
+  UpdateResponse,
 } from '@/core/repositories/base-repository';
 import { User, UserProps } from '@/domain/users/enterprise/entities/user';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
@@ -23,6 +25,12 @@ export abstract class UserRepository extends BaseRepository<User, UserProps> {
     params: CreateRequest<Partial<UserProps>>,
   ): Promise<CreateResponse> {
     return { id: UniqueID.transform({}) };
+  }
+
+  public async update(
+    params: UpdateRequest<Partial<UserProps>>,
+  ): Promise<UpdateResponse> {
+    return { success: true };
   }
 
   public async delete(params: DeleteRequest): Promise<DeleteResponse> {
