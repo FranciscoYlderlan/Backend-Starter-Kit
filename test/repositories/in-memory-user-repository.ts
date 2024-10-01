@@ -13,6 +13,10 @@ import {
 import { UserRepository } from '@/domain/users/application/repositories/user-repository';
 import { User, UserProps } from '@/domain/users/enterprise/entities/user';
 
+type RequiredUserProps = Required<
+  Pick<UserProps, 'name' | 'email' | 'password'>
+>;
+
 export class InMemoryUserRepository implements UserRepository {
   public Users: User[] = [];
 
@@ -45,7 +49,7 @@ export class InMemoryUserRepository implements UserRepository {
     const foundUser = this.Users.find(
       (user) => user[key as keyof UserProps] === value,
     );
-
+    if (!foundUser) return { item: {} };
     return { item: foundUser };
   }
 
@@ -53,6 +57,8 @@ export class InMemoryUserRepository implements UserRepository {
     const foundUser = await this.Users.find(
       (user) => user.getSlug().toString() === slug,
     );
+
+    if (!foundUser) return { item: {} };
     return { item: foundUser };
   }
 
@@ -63,7 +69,7 @@ export class InMemoryUserRepository implements UserRepository {
     params: CreateRequest<Partial<UserProps>>,
   ): Promise<CreateResponse> {
     const { id, name, avatar, createdAt, email, password, slug, updatedAt } =
-      params.data;
+      params.data as RequiredUserProps & Partial<UserProps>;
     const props = {
       id,
       name,
