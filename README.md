@@ -283,6 +283,10 @@ Built on **NestJS** for the backend, the application includes foundational featu
 
 ### Usage
 
+#### Authentication - RS256
+
+This project may potentially include the RS256 algorithm for authentication. You will need to generate both a private and a public key. After generating the keys, they must be converted to Base64 format. Then, set these keys in the environment variables, where the private key will be used for signing tokens, and the public key for verifying them.
+
 <h4>From <code>source</code></h4>
 
 > Run Backend-Starter-Kit using the command below:
@@ -305,7 +309,8 @@ Built on **NestJS** for the backend, the application includes foundational featu
 
 - [x] `► BSK-2`
 - [x] `► BSK-5`
-- [ ] `► BSK-6`
+- [x] `► BSK-6`
+- [] `► BSK-10`
 
 ---
 
