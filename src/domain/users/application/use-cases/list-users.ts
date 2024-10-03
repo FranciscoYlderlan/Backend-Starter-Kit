@@ -1,4 +1,5 @@
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
+import { Injectable } from '@nestjs/common';
 import { User } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
 
@@ -12,6 +13,8 @@ export interface ListUsersOutput {
   items: Partial<User>[];
   totalCount: number;
 }
+
+@Injectable()
 export class ListUsersUseCase extends BaseUseCase<
   ListUsersInput,
   ListUsersOutput
