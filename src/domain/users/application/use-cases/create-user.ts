@@ -1,5 +1,6 @@
 import { Optional } from '@/core/types/optional';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
+import { Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import { User, UserProps } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
@@ -10,6 +11,7 @@ export interface CreateUserInput
 export interface CreateUserOutput {
   user: User;
 }
+@Injectable()
 export class CreateUserUseCase extends BaseUseCase<
   CreateUserInput,
   CreateUserOutput
@@ -25,7 +27,7 @@ export class CreateUserUseCase extends BaseUseCase<
       email: params.email,
     });
 
-    if (userWithSameEmail) {
+    if (userWithSameEmail.item) {
       throw new Error('User with same email already exists.');
     }
 
