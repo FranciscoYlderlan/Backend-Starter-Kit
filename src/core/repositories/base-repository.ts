@@ -13,7 +13,7 @@ export interface ShowRequest {
 }
 
 export interface ShowResponse<Entity> {
-  item: Partial<Entity>;
+  item: Partial<Entity> | undefined;
 }
 
 export interface CreateRequest<EntityProps> {

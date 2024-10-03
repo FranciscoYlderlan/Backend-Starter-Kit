@@ -49,7 +49,7 @@ export class InMemoryUserRepository implements UserRepository {
     const foundUser = this.Users.find(
       (user) => user[key as keyof UserProps] === value,
     );
-    if (!foundUser) return { item: {} };
+    if (!foundUser) return { item: undefined };
     return { item: foundUser };
   }
 
@@ -58,7 +58,7 @@ export class InMemoryUserRepository implements UserRepository {
       (user) => user.getSlug().toString() === slug,
     );
 
-    if (!foundUser) return { item: {} };
+    if (!foundUser) return { item: undefined };
     return { item: foundUser };
   }
 

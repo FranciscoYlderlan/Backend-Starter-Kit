@@ -9,7 +9,7 @@ export interface FindUserInput {
 }
 
 export interface FindUserOutput {
-  item: Partial<User>;
+  item: Partial<User> | undefined;
 }
 export class FindUserUseCase extends BaseUseCase<
   FindUserInput,
