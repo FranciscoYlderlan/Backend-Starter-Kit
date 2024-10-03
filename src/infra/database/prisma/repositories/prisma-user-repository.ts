@@ -55,10 +55,12 @@ export class PrismaUserRepository implements UserRepository {
 
     const foundUser = await this.prisma.user.findFirst({
       where: {
-        [key as keyof UserProps]: value,
+        [key as keyof UserProps]:
+          key === 'id' ? (value as UniqueID).toString() : value,
       },
     });
     if (!foundUser) return { item: undefined };
+
     return { item: PrismaUserMapper.toDomain(foundUser) };
   }
 
