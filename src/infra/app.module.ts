@@ -5,8 +5,6 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { HttpModule } from './http/http.module';
 
-import { CreateUserController } from './http/controllers/create-user.controller';
-
 import { envSchema } from './env';
 
 @Module({
@@ -20,6 +18,5 @@ import { envSchema } from './env';
     AuthModule,
     DatabaseModule,
   ],
-  controllers: [CreateUserController],
 })
 export class AppModule {}
