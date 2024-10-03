@@ -58,7 +58,7 @@ export class PrismaUserRepository implements UserRepository {
         [key as keyof UserProps]: value,
       },
     });
-    if (!foundUser) return { item: {} };
+    if (!foundUser) return { item: undefined };
     return { item: PrismaUserMapper.toDomain(foundUser) };
   }
 

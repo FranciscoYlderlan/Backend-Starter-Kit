@@ -11,36 +11,23 @@ import {
   UpdateResponse,
 } from '@/core/repositories/base-repository';
 import { User, UserProps } from '@/domain/users/enterprise/entities/user';
-import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 
 export abstract class UserRepository extends BaseRepository<User, UserProps> {
-  public async index(params: IndexRequest): Promise<IndexResponse<User>> {
-    return { items: [], totalCount: -1 };
-  }
+  abstract index(params: IndexRequest): Promise<IndexResponse<User>>;
 
-  public async findBySlug(params: string): Promise<ShowResponse<User>> {
-    return { item: {} };
-  }
+  abstract findBySlug(params: string): Promise<ShowResponse<User>>;
 
-  public async findByProperty<K extends keyof UserProps>(
+  abstract findByProperty<K extends keyof UserProps>(
     params: Record<K, UserProps[K]>,
-  ): Promise<ShowResponse<User>> {
-    return { item: {} };
-  }
+  ): Promise<ShowResponse<User>>;
 
-  public async create(
+  abstract create(
     params: CreateRequest<Partial<UserProps>>,
-  ): Promise<CreateResponse> {
-    return { id: UniqueID.transform({}) };
-  }
+  ): Promise<CreateResponse>;
 
-  public async update(
+  abstract update(
     params: UpdateRequest<Partial<UserProps>>,
-  ): Promise<UpdateResponse> {
-    return { success: true };
-  }
+  ): Promise<UpdateResponse>;
 
-  public async delete(params: DeleteRequest): Promise<DeleteResponse> {
-    return { success: true };
-  }
+  abstract delete(params: DeleteRequest): Promise<DeleteResponse>;
 }
