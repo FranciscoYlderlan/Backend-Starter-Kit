@@ -65,16 +65,28 @@ export class PrismaUserRepository implements UserRepository {
   public async create(
     params: CreateRequest<Partial<UserProps>>,
   ): Promise<CreateResponse> {
-    return { id: UniqueID.transform({}) };
+    const data = PrismaUserMapper.toPersistence(params.data);
+    const { id } = await this.prisma.user.create({
+      data,
+    });
+    return { id: UniqueID.transform({ id }) };
   }
 
   public async update(
     params: UpdateRequest<Partial<UserProps>>,
   ): Promise<UpdateResponse> {
+    const { id, ...data } = PrismaUserMapper.toPersistence(params.data);
+    await this.prisma.user.update({
+      where: { id },
+      data,
+    });
     return { success: true };
   }
 
   public async delete(params: DeleteRequest): Promise<DeleteResponse> {
+    await this.prisma.user.delete({
+      where: { id: params.id },
+    });
     return { success: true };
   }
 }

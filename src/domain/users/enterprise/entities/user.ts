@@ -7,7 +7,7 @@ export interface UserProps {
   name: string;
   slug: Slug;
   email: string;
-  avatar?: string;
+  avatar?: string | null;
   password: string;
   createdAt: Date;
   updatedAt?: Date;
@@ -65,7 +65,7 @@ export class User extends BaseEntity<UserProps> {
     return this.props.password;
   }
 
-  public getAvatar(): string | undefined {
+  public getAvatar(): string | undefined | null {
     return this.props.avatar;
   }
   public getCreatedAt(): Date {
