@@ -9,11 +9,13 @@ import { DatabaseModule } from '../database/database.module';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { CreateUserController } from './controllers/create-user.controller';
 import { DeleteUserController } from './controllers/delete-user.controller';
+import { FindUserController } from './controllers/find-user.controller';
 import { ListUsersController } from './controllers/list-users.controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
+    FindUserController,
     CreateUserController,
     AuthenticateController,
     ListUsersController,
