@@ -1,4 +1,10 @@
-import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Query,
+  UsePipes,
+} from '@nestjs/common';
 
 import { ListUsersUseCase } from '@/domain/users/application/use-cases/list-users';
 import { User } from '@/domain/users/enterprise/entities/user';
@@ -29,6 +35,11 @@ export class ListUsersController {
       itemsPerPage,
       sortDirection,
     });
+
+    if (result.isFailure()) {
+      throw new BadRequestException();
+    }
+
     if (result.isSuccess()) {
       const { items, totalCount } = result.value;
       return {
