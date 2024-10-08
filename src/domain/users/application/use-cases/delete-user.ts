@@ -1,14 +1,15 @@
+import { Either, failure, success } from '@/core/types/either';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
 import { Injectable } from '@nestjs/common';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 import { UserRepository } from '../repositories/user-repository';
-
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
 export interface DeleteUserInput {
   id: UniqueID;
 }
-export interface DeleteUserOutput {
-  success: boolean;
-}
+
+type DeleteUserOutput = Either<{ success: boolean }, ResourceNotFoundError>;
+
 @Injectable()
 export class DeleteUserUseCase extends BaseUseCase<
   DeleteUserInput,
@@ -20,12 +21,15 @@ export class DeleteUserUseCase extends BaseUseCase<
 
   public async execute(params: DeleteUserInput): Promise<DeleteUserOutput> {
     const { id } = params;
-    const userFounded = await this.userRepository.findByProperty({
+    const userFounded = await this.userRepository.findById({
       id: id,
     });
-    if (!userFounded.item) throw new Error('User not found.');
+    if (!userFounded.item) return failure(new ResourceNotFoundError());
 
-    const { success } = await this.userRepository.delete({ id: id.toString() });
-    return { success };
+    const { success: success_ } = await this.userRepository.delete({
+      id: id.toString(),
+    });
+
+    return success({ success: success_ });
   }
 }

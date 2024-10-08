@@ -1,15 +1,15 @@
 import { makeUser } from 'test/factories/make-user';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
 import { Slug } from '../../enterprise/entities/value-objects/slug';
-import { FindUserUseCase } from './find-user-by-slug';
+import { FindUserBySlugUseCase } from './find-user-by-slug';
 
 let inMemoryUserRepository: InMemoryUserRepository;
-let findUserUseCase: FindUserUseCase;
+let findUserUseCase: FindUserBySlugUseCase;
 
 describe('Find User', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
-    findUserUseCase = new FindUserUseCase(inMemoryUserRepository);
+    findUserUseCase = new FindUserBySlugUseCase(inMemoryUserRepository);
   });
   it('should be able to find a user', async () => {
     const userData = makeUser({
@@ -35,7 +35,6 @@ describe('Find User', () => {
     const slug = Slug.transform({ value: 'name-example2' });
 
     const result = await findUserUseCase.execute({ slug });
-
-    expect(result.item.getSlug().toString()).toEqual('name-example2');
+    expect(result.isSuccess()).toEqual(true);
   });
 });

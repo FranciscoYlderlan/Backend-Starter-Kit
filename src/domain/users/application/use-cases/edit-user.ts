@@ -1,6 +1,8 @@
+import { Either, failure, success } from '@/core/types/either';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 import { UserRepository } from '../repositories/user-repository';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 export interface EditUserInput {
   id: UniqueID;
@@ -10,9 +12,8 @@ export interface EditUserInput {
   password?: string;
 }
 
-export interface EditUserOutput {
-  success: boolean;
-}
+type EditUserOutput = Either<{ success: boolean }, ResourceNotFoundError>;
+
 export class EditUserUseCase extends BaseUseCase<
   EditUserInput,
   EditUserOutput
@@ -24,15 +25,15 @@ export class EditUserUseCase extends BaseUseCase<
   public async execute(params: EditUserInput): Promise<EditUserOutput> {
     const { id, email, name, password, avatar } = params;
 
-    const user = await this.userRepository.findByProperty({ id });
+    const user = await this.userRepository.findById({ id });
 
-    if (!user.item) throw new Error('User not found.');
+    if (!user.item) return failure(new ResourceNotFoundError());
 
     const status = await this.userRepository.update({
       id,
       data: { name, email, avatar, password },
     });
 
-    return status;
+    return success(status);
   }
 }

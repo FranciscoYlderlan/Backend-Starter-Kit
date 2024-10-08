@@ -1,17 +1,17 @@
 import { Either, failure, success } from '@/core/types/either';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
 import { User } from '../../enterprise/entities/user';
-import { Slug } from '../../enterprise/entities/value-objects/slug';
+import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 import { UserRepository } from '../repositories/user-repository';
 import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 export interface FindUserInput {
-  slug: Slug;
+  id: UniqueID;
 }
 
 type FindUserOutput = Either<{ item: Partial<User> }, ResourceNotFoundError>;
 
-export class FindUserBySlugUseCase extends BaseUseCase<
+export class FindUserUseCase extends BaseUseCase<
   FindUserInput,
   FindUserOutput
 > {
@@ -20,8 +20,8 @@ export class FindUserBySlugUseCase extends BaseUseCase<
   }
 
   public async execute(params: FindUserInput): Promise<FindUserOutput> {
-    const { slug } = params;
-    const { item } = await this.userRepository.findBySlug(slug.toString());
+    const { id } = params;
+    const { item } = await this.userRepository.findById({ id });
 
     if (!item) return failure(new ResourceNotFoundError());
 
