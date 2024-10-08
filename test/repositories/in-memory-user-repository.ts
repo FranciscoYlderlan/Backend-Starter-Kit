@@ -12,6 +12,7 @@ import {
 } from '@/core/repositories/base-repository';
 import { UserRepository } from '@/domain/users/application/repositories/user-repository';
 import { User, UserProps } from '@/domain/users/enterprise/entities/user';
+import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
 
 type RequiredUserProps = Required<
   Pick<UserProps, 'name' | 'email' | 'password'>
@@ -42,14 +43,24 @@ export class InMemoryUserRepository implements UserRepository {
 
     return { items: paginatedUsers, totalCount };
   }
-  public async findByProperty(
-    params: Partial<UserProps>,
-  ): Promise<ShowResponse<User>> {
-    const [key, value] = Object.entries(params)[0];
+
+  public async findById(params: { id: UniqueID }): Promise<ShowResponse<User>> {
     const foundUser = this.Users.find(
-      (user) => user[key as keyof UserProps] === value,
+      (user) => user.getId().toString() === params.id.toString(),
+    );
+
+    if (!foundUser) return { item: undefined };
+    return { item: foundUser };
+  }
+
+  public async findByEmail(params: { email: string }): Promise<
+    ShowResponse<User>
+  > {
+    const foundUser = this.Users.find(
+      (user) => user.getEmail() === params.email,
     );
     if (!foundUser) return { item: undefined };
+
     return { item: foundUser };
   }
 

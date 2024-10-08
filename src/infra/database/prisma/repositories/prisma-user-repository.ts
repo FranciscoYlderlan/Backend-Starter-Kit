@@ -48,15 +48,24 @@ export class PrismaUserRepository implements UserRepository {
     return { item: {} };
   }
 
-  public async findByProperty<K extends keyof UserProps>(
-    params: Record<K, UserProps[K]>,
-  ): Promise<ShowResponse<User>> {
-    const [key, value] = Object.entries(params)[0];
-
+  public async findById(params: {
+    id: UniqueID;
+  }): Promise<ShowResponse<User>> {
     const foundUser = await this.prisma.user.findFirst({
       where: {
-        [key as keyof UserProps]:
-          key === 'id' ? (value as UniqueID).toString() : value,
+        id: params.id.toString(),
+      },
+    });
+    if (!foundUser) return { item: undefined };
+
+    return { item: PrismaUserMapper.toDomain(foundUser) };
+  }
+  public async findByEmail(params: {
+    email: string;
+  }): Promise<ShowResponse<User>> {
+    const foundUser = await this.prisma.user.findFirst({
+      where: {
+        email: params.email,
       },
     });
     if (!foundUser) return { item: undefined };
