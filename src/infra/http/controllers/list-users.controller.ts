@@ -24,15 +24,17 @@ export class ListUsersController {
   async handle(@Query() query: ListQuerySchema) {
     const { page, itemsPerPage, sortDirection } = query;
 
-    const { items, totalCount } = await this.listUsersUseCase.execute({
+    const result = await this.listUsersUseCase.execute({
       page,
       itemsPerPage,
       sortDirection,
     });
-
-    return {
-      items: items.map((item) => UserPresenter.toHttp(item as User)),
-      totalCount,
-    };
+    if (result.isSuccess()) {
+      const { items, totalCount } = result.value;
+      return {
+        items: items.map((item) => UserPresenter.toHttp(item as User)),
+        totalCount,
+      };
+    }
   }
 }
