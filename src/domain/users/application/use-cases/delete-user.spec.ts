@@ -1,6 +1,5 @@
 import { makeUser } from 'test/factories/make-user';
 import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository';
-import { Slug } from '../../enterprise/entities/value-objects/slug';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 import { DeleteUserUseCase } from './delete-user';
 
@@ -19,6 +18,8 @@ describe('Delete User', () => {
     inMemoryUserRepository.create({
       data: userData,
     });
+
+    expect(inMemoryUserRepository.Users).toHaveLength(1);
 
     await deleteUserUseCase.execute({ id });
 

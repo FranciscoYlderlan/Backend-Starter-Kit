@@ -2,6 +2,7 @@ import { BaseUseCase } from '@/core/use-cases/base-use-case';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
+import { Either, success } from '@/core/types/either';
 
 export interface ListUsersInput {
   page: number;
@@ -9,10 +10,13 @@ export interface ListUsersInput {
   sortDirection?: 'asc' | 'desc';
 }
 
-export interface ListUsersOutput {
-  items: Partial<User>[];
-  totalCount: number;
-}
+type ListUsersOutput = Either<
+  {
+    items: Partial<User>[];
+    totalCount: number;
+  },
+  undefined
+>;
 
 @Injectable()
 export class ListUsersUseCase extends BaseUseCase<
@@ -34,6 +38,6 @@ export class ListUsersUseCase extends BaseUseCase<
       sortDirection,
     });
 
-    return { items, totalCount };
+    return success({ items, totalCount });
   }
 }

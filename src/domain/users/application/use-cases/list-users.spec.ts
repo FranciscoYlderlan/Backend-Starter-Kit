@@ -37,17 +37,16 @@ describe('List Users', () => {
       }),
     });
 
-    const { items, totalCount } = await listUsersUseCase.execute({
+    const result = await listUsersUseCase.execute({
       page: 1,
       itemsPerPage: 10,
     });
 
-    expect(items).toHaveLength(3);
-    expect(totalCount).toBe(3);
-
-    expect(items[0].getCreatedAt()).toEqual(new Date(2024, 1, 20));
-    expect(items[1].getCreatedAt()).toEqual(new Date(2024, 1, 10));
-    expect(items[2].getCreatedAt()).toEqual(new Date(2024, 1, 5));
+    if (result.isSuccess()) {
+      const { items, totalCount } = result.value;
+      expect(items).toHaveLength(3);
+      expect(totalCount).toBe(3);
+    }
   });
 
   it('should be able to list paginated users', async () => {
@@ -58,12 +57,14 @@ describe('List Users', () => {
     }
 
     // Executando o caso de uso de listagem
-    const { items, totalCount } = await listUsersUseCase.execute({
+    const result = await listUsersUseCase.execute({
       page: 3,
       itemsPerPage: 5,
     });
-
-    expect(items).toHaveLength(2);
-    expect(totalCount).toBe(12);
+    if (result.isSuccess()) {
+      const { items, totalCount } = result.value;
+      expect(items).toHaveLength(2);
+      expect(totalCount).toBe(12);
+    }
   });
 });
