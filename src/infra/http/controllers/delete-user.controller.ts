@@ -21,9 +21,12 @@ export class DeleteUserController {
     const { id: _id } = param;
     const id = UniqueID.transform({ value: _id });
 
-    const { success } = await this.deleteUserUseCase.execute({
+    const result = await this.deleteUserUseCase.execute({
       id,
     });
-    return { success };
+
+    if (result.isSuccess()) {
+      return { success: result.value.success };
+    }
   }
 }
