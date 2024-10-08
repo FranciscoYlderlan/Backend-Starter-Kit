@@ -1,8 +1,16 @@
 import { FindUserUseCase } from '@/domain/users/application/use-cases/find-user';
 import { User } from '@/domain/users/enterprise/entities/user';
 import { UniqueID } from '@/domain/users/enterprise/entities/value-objects/unique-id';
-import { Controller, Get, Param, UsePipes } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  UsePipes,
+} from '@nestjs/common';
 
+import { ResourceNotFoundError } from '@/domain/users/application/use-cases/errors/resource-not-found-error';
 import { ZodValidationPipe } from 'src/infra/http/pipes/zod-validation-pipe';
 import { z } from 'zod';
 import { UserPresenter } from '../presenters/user-presenter';
@@ -26,6 +34,16 @@ export class FindUserController {
     const result = await this.findUserUseCase.execute({
       id,
     });
+
+    if (result.isFailure()) {
+      const error = result.value;
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(error.message);
+        default:
+          throw new BadRequestException(error.message);
+      }
+    }
 
     if (result.isSuccess()) {
       return { item: UserPresenter.toHttp(result.value.item as User) };
