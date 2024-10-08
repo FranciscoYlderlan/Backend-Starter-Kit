@@ -1,5 +1,6 @@
 import { Either, failure, success } from '@/core/types/either';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
+import { Injectable } from '@nestjs/common';
 import { User } from '../../enterprise/entities/user';
 import { UniqueID } from '../../enterprise/entities/value-objects/unique-id';
 import { UserRepository } from '../repositories/user-repository';
@@ -11,6 +12,7 @@ export interface FindUserInput {
 
 type FindUserOutput = Either<{ item: Partial<User> }, ResourceNotFoundError>;
 
+@Injectable()
 export class FindUserUseCase extends BaseUseCase<
   FindUserInput,
   FindUserOutput
