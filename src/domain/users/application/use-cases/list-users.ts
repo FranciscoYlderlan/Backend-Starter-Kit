@@ -1,8 +1,8 @@
+import { Either, success } from '@/core/types/either';
 import { BaseUseCase } from '@/core/use-cases/base-use-case';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../enterprise/entities/user';
 import { UserRepository } from '../repositories/user-repository';
-import { Either, success } from '@/core/types/either';
 
 export interface ListUsersInput {
   page: number;
